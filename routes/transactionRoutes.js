@@ -7,6 +7,8 @@ const { ObjectId } = require('mongodb');
 router.post('/create', async (req, res) => {
     const transaction = req.body;
     try {
+        const newTransaction = await Transaction.create(transaction);
+
         let newTransferTransaction = null
         let transferTransaction = { ...transaction };
         if (transaction.type === "transfer"){
@@ -14,14 +16,13 @@ router.post('/create', async (req, res) => {
             // Make modifications to the transferTransaction object
             transferTransaction.accountId = transaction.toAccountId;
             transferTransaction.fromAccountId = transaction.accountId;
+            transferTransaction.parentTransactionId = newTransaction._id;
 
             // Delete the toAccountId property from the transferTransaction object
             transferTransaction.toAccountId = "";
 
             newTransferTransaction = await Transaction.create(transferTransaction)
         }
-        
-        const newTransaction = await Transaction.create(transaction);
 
         console.log("New Transaction Created Successfully");
         (newTransferTransaction ? 

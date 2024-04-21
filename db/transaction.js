@@ -43,6 +43,9 @@ const transactionSchema = new mongoose.Schema({
     submitDateTime: {
         type:Date,
     },
+    parentTransactionId: {
+        type: ObjectId
+    }
 });
 
 

@@ -15,7 +15,7 @@ router.get('/timeframe-total-balance/:userId', async (req, res) => {
     const userIdObject = new mongoose.Types.ObjectId(userId);
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
-    const userTimeZone = req.headers['user-timezone'];
+    const userTimeZone = req.headers['x-user-timezone'];
 
     let query = {
         userId: userIdObject,
@@ -237,7 +237,7 @@ router.get('/last90days-expense-income-balance/:userId', async (req, res) => {
     const userId = req.params.userId;
     const userIdObject = new mongoose.Types.ObjectId(userId);
     // const dateGap = req.query.dateGap;
-    const userTimeZone = req.headers['user-timezone'];
+    const userTimeZone = req.headers['x-user-timezone'];
 
     const ninetyDaysAgo = new Date();
     ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
@@ -363,7 +363,7 @@ router.get('/category-analytic/:userId', async(req, res) => {
     // const startDate = req.query.startDate;
     // const endDate = req.query.endDate;
     const period = req.query.period;
-    const userTimeZone = req.headers['user-timezone'];
+    const userTimeZone = req.headers['x-user-timezone'];
 
     let query = {};
     let groupId = {};
@@ -741,7 +741,7 @@ router.get('/sankey/:userId', async(req,res) => {
     // const startDate = req.query.startDate;
     // const endDate = req.query.endDate; 
     const period = req.query.period;
-    const userTimeZone = req.headers['user-timezone'];
+    const userTimeZone = req.headers['x-user-timezone'];
     
     // const currentDate = new Date()
     // const startDate = new Date(currentDate.setDate(currentDate.getDate() - 30))
