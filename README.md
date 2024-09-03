@@ -1,10 +1,12 @@
 # MadaniLab Finance API
 
-The MadaniLab Finance API provides endpoints for managing financial transactions, user profiles, and spaces. It supports creating, retrieving, and updating financial data, user profiles, and spaces.
+MadaniLab Finance API provides endpoints for managing financial transactions, user profiles, and spaces. It supports creating, retrieving, and updating financial data, user profiles, and spaces.
 
-## Installation
+## Getting Started
 
-``` bash
+### Installation
+
+```bash
 git clone https://github.com/bardiamdn/finance-api
 
 cd finance-api
@@ -12,17 +14,21 @@ cd finance-api
 npm install
 ```
 
-Run
-``` bash
+### Run the Server
+
+```bash
 npm run dev
+```
+
+### Create Image and Deploy Conatiner
+
+```bash
+docker-compose up -d # use --build and --force-recreate if needed
 ```
 
 ## End Points
 
-Data types and required for the routes
-
-----------------------------------
-### api/transactions: 
+### api/transactions:
 
 **Required Fields**:
 
@@ -39,50 +45,53 @@ Data types and required for the routes
 
 - space: String
 
- Example Request: -> POST /api/transactions
+Example Request: -> POST /api/transactions
+
 ```json
 {
   "userId": "60c72b2f5b3c5b1d2f5b1e9a",
   "account": "Savings",
   "date": "2024-09-01T00:00:00Z",
-  "amount": 150.00,
+  "amount": 150.0,
   "type": "Expense",
   "category": "Utilities",
   "details": "Electric bill payment",
   "submitDateTime": "2024-09-01T12:00:00Z"
 }
 ```
-----------------------------------
+
 ### api/profile:
+
 **Required Fields**:
 
 - userId: ObjectId (required)
-**Optional Fields**:
+  **Optional Fields**:
 
 - username: String
-- profilePic: String (default: '<svg >...</svg>')
+- profilePic: String (default)
 - accounts: Array of Account Objects
 - categories: Array of Category Objects
 - lastSignin: Date
 - createdAt: Date
 - Account Object:
-    - dateUpdated: Date
-    - accountTitle: String
-    - accountIco: String (default: '<svg >...</svg>')
-    - accountColor: String (default: '#ffffff')
-    - accountBalance: String
-    - listPriority: Number
-    - createdAt: Date
+  - dateUpdated: Date
+  - accountTitle: String
+  - accountIco: String (default)
+  - accountColor: String (default: '#ffffff')
+  - accountBalance: String
+  - listPriority: Number
+  - createdAt: Date
 - Category Object:
-    - dateUpdated: Date
-    - categoryTitle: String
-    - categoryIcon: String (default: '<svg >...</svg>')
-    - categoryColor: String (default: '#ffffff')
-    - categoryBalance: String
-    - listPriority: Number
-    - createdAt: Date
+  - dateUpdated: Date
+  - categoryTitle: String
+  - categoryIcon: String (default)
+  - categoryColor: String (default: '#ffffff')
+  - categoryBalance: String
+  - listPriority: Number
+  - createdAt: Date
 
- Example Request: -> POST /api/profile
+Example Request: -> POST /api/profile
+
 ```json
 {
   "userId": "60c72b2f5b3c5b1d2f5b1e9a",
@@ -114,7 +123,7 @@ Data types and required for the routes
   "createdAt": "2024-01-01T00:00:00Z"
 }
 ```
-----------------------------------
+
 ### api/space:
 
 **Required Fields**:
@@ -124,12 +133,13 @@ Data types and required for the routes
 - usernames: Array of Username Objects
 - username: String (required)
 - spaceName: String (required)
-**Optional Fields**:
+  **Optional Fields**:
 
 - spaceBalance: String
 - admins: Array of Admin Objects
 
 Example Request: -> POST /api/space
+
 ```json
 {
   "userIds": [

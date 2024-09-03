@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api:  
+    build: 
+      context: .
+      dockerfile: Dockerfile 
+    image: finance-api-img:1.1
+    container_name: finance-madanilab-api
+    ports:
+      - "3000:3000"
+    # environment:
+      # - NODE_ENV=development
+    # volumes:
+      # - .:/usr/src/app  
+    restart: always 
