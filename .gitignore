@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node modules
 node_modules/
 
@@ -22,3 +23,27 @@ Thumbs.db
 keypairs/id*
 
 cert
+=======
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Dependency directory
+.dependency/
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+keypairs/id*
+>>>>>>> main
