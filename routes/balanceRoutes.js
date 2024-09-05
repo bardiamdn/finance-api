@@ -58,10 +58,8 @@ router.get('/timeframe-total-balance/:userId', async (req, res) => {
             }
         ])
         if (balance.length > 0) {
-            console.log("Got Total Balance Succssefully");
             res.status(200).json({ sucess: true, balance: balance[0] })
         } else if (balance.length === 0) {
-            console.log("Empty Total Balance");
             res.status(204).json({ sucess: true, msg: "no data to calculate the balances" })
         }
     } catch (error) {
@@ -161,7 +159,6 @@ router.get('/timeframe-account-balance/:userId', async (req,res) => {
             }
         ]);
         if (accountsBalance.length > 0) {
-            console.log("Got Account Balances Successfully");
             res.status(200).json({ sucess: true, accountsBalance: accountsBalance })
         } else if (accountsBalance === 0) {
             res.status(204).json({ sucess: false, msg: "No account data to show" })
@@ -224,7 +221,6 @@ router.get('/timeframe-category-amount/:userId', async (req,res) => {
                 }
             }
         ]);
-        console.log("Got Category Amounts Successfully");
 
         res.status(200).json({ sucess: true, categoryAmount: categoryAmount })
     } catch (error) {
@@ -316,7 +312,6 @@ router.get('/last90days-expense-income-balance/:userId', async (req, res) => {
                 }
             }
         ])
-        // console.log(formerBalance, expenseIncomeBalance)
         if (formerBalance.length > 0 || expenseIncomeBalance.length > 0) {
             const aggregationMap = new Map();
             expenseIncomeBalance.forEach(item => {
@@ -344,7 +339,6 @@ router.get('/last90days-expense-income-balance/:userId', async (req, res) => {
                 }
             });
     
-            console.log("Got Last 90 Days Income, Expense")
             res.status(200).json({ sucess: true, data: mergedData })
         } else if ((formerBalance.length === 0) && (expenseIncomeBalance.length === 0)) {
             res.status(204).json({ success: true, msg: "There is no data" })
@@ -560,7 +554,6 @@ router.get('/category-analytic/:userId', async(req, res) => {
     } else {
         res.status(400).send("<h1>Query should either have period or startDate and endDate</h1>");
     }
-    console.log("Query from Category Analytics", query, "GroupId from Category Analytics", groupId, "Period", period);
 
     try {
         // const categoryAmountBar = await Transaction.aggregate([
@@ -695,11 +688,9 @@ router.get('/category-analytic/:userId', async(req, res) => {
                 resultPie[entry._id] = entry.categories;
             });
     
-            console.log(emptyGaps);
             const resultBar = categoryAMountBar.map(entry => {
                 // { gap: entry.gap, ...entry.categoryAmounts}
                 const something = entry.gap;
-                console.log(emptyGaps[something])
                 if (emptyGaps[something]) { // the error might be caused by having more from the aggregation that emptyGa3 
                     if (emptyGaps[something].gap === entry.gap) { 
                         emptyGaps[something].categoryAmounts = entry.categoryAmounts
@@ -708,10 +699,8 @@ router.get('/category-analytic/:userId', async(req, res) => {
                             order: emptyGaps[something].order,
                             ...emptyGaps[something].categoryAmounts
                         }
-                        console.log(emptyGaps[something])
                         return emptyGaps[something]
                     } else {
-                        console.log(emptyGaps[something])
                         return emptyGaps[something]
                     };
                 };
@@ -719,13 +708,8 @@ router.get('/category-analytic/:userId', async(req, res) => {
             const emptyGapsArray = Object.values(emptyGaps);
             emptyGapsArray.sort((a, b) => a.order - b.order);
     
-            // console.log("Got Category Analytics Data Successfully: ", categoryAMountBar)
-            // console.log("Got Category Analytics Data Successfully: ", resultBar)
-            // console.log("Got Category Analytics Data Successfully: ", emptyGapsArray)
             res.status(200).json({ sucess: true, barData: emptyGapsArray, pieData: resultPie});
         } else if ((categoryAMountBar.length === 0) && (categoryAmountPie.length === 0)) {
-            console.log("Empty category Analytic Data");
-            // console.log(categoryAMountBar, categoryAmountPie)
             res.status(204).json({ sucess: true, msg: "no data to calculate the analytics" });
         };
     } catch (error) {
@@ -871,7 +855,6 @@ router.get('/sankey/:userId', async(req,res) => {
         startDate.setHours(0, 0, 0, 0);
     }
 
-    console.log("Important Date from Sankey", startDate)
     try {
         const accountsInitialBalance = await Transaction.aggregate([
             {
@@ -1057,7 +1040,6 @@ router.get('/sankey/:userId', async(req,res) => {
                 }
             }
         ])
-        // console.log("SANKEY", accountsInitialBalance, accountsFinalBalance, categoriesAmount)
         if (accountsInitialBalance.length > 0 || accountsFinalBalance.length > 0 || categoriesAmount.length > 0) {
             const combinedArray = [].concat(
                 accountsInitialBalance.map(item => ({ ...item })),
@@ -1065,7 +1047,6 @@ router.get('/sankey/:userId', async(req,res) => {
                 categoriesAmount.map(item => ({ ...item }))
             );
     
-            console.log("Got Sankey Analytics Data Successfully: ")
             res.status(200).json({ 
                 sucess: true, 
                 sankeyData: combinedArray,
@@ -1127,7 +1108,6 @@ router.get('/total-balance/:userId', async (req, res) => {
             }
         ])
 
-        console.log("Total Balance:", balance[0]);
         res.status(200).json({ balance: balance[0] });
     } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -1172,7 +1152,6 @@ router.get('/account-balance/:userId/', async (req, res) => {
         })
         const totalBalance = Object.values(accountBalances).reduce((acc, balance) => acc + balance, 0);
 
-        console.log(accountBalances)
         res.status(200).json({ data: accountBalances , totalBalance: totalBalance});
     } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -1210,7 +1189,6 @@ router.get('/category-balance/:userId', async(req, res) => {
                 categoryBalances[categoryId] += amount;
             }
         })
-        console.log(categoryBalances)
         res.status(200).json({ data: categoryBalances });
     } catch (error) {
         console.error('Error fetching transactions:', error);

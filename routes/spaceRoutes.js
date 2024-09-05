@@ -7,7 +7,6 @@ router.post('/create-space/:userId', async (req, res) => {
     
     try {
         const newSpace = await Space.create(req.body);
-        console.log(newSpace);
         res.status(201).json({ message: 'Spacce created successfully with ID: ' + newSpace["_id"], success: true, data: newSpace });
     } catch (error) {
         console.error('Error creating transaction:', error);
@@ -22,7 +21,6 @@ router.get('/read-space/:spaceId', async (req, res) => {
     try {
         const result = await Space.findOne({ _id: spaceId }).exec();
         res.status(200).json({ success: true, data: result });
-        console.log("Got Successfully");
     } catch (error) {
         console.error('Error reading documents:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });

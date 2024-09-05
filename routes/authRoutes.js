@@ -10,6 +10,7 @@ router.get('/authenticated/:userId', utils.authMiddleware, async (req, res) => {
     try {
         const result = await User.findById({ _id: userId });
         if (result) {
+            console.log(userId + " logged into app on: "+ new Date() )
             res.status(200).json({ success: true, msg: "you are authorized" });
         } else {
             res.status(401).json({success: false, msg: "user not found"});
@@ -31,17 +32,15 @@ router.post('/signup', async (req, res) => {
         }
 
         const saltHash = utils.genPassword(req.body.password);
-        console.log(saltHash);
 
         const newUser = new User({
             username: String(req.body.username),
             hash: saltHash.hash,
             salt: saltHash.salt,
         });
-        console.log(newUser);
         
         const savedUser = await newUser.save();
-        console.log(savedUser);
+        console.log(savedUser.username);
         
         const newProfile = new Profile({
             username: savedUser.username,
@@ -69,7 +68,6 @@ router.post('/signup', async (req, res) => {
             // ],
             createdAt: Date.now(),
         });
-        console.log(newProfile);
 
         await newProfile.save();
 

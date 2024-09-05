@@ -51,7 +51,6 @@ router.get('/read/:userId', async (req, res) => {
             .exec();
         if (result.length > 0) {
             res.status(200).json({ success: true, data: result, totalPages: totalPages, currentPage: page });
-            console.log("Got Transaction History Successfully");
         } else {
             res.status(204).json({ success: true, msg: "no history data was found" })
         }

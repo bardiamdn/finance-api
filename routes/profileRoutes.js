@@ -12,7 +12,6 @@ router.get('/read-profile/:userId', async (req, res) => {
     try {
         const result = await Profile.findOne({ userId: userId }).exec();
         res.status(200).json({ success: true, data: result });
-        console.log("Got Profile Data Successfully");
     } catch (error) {
         console.error('Error reading documents:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
@@ -82,7 +81,6 @@ router.delete('/remove-account/:userId', async (req, res) => {
         if (!result) {
             return res.status(404).json({ message: `Account with ID ${accountId} not found` });
         }
-        // console.log(result)
         res.status(200).json({ message: 'Account removed successfully', success: true, data: result,
             removedTransactions: transactionResult 
         });
@@ -103,7 +101,6 @@ router.put('/add-category/:userId', async (req,res) => {
             { $push: { categories: categoryData } },
             { new: true }
         );
-        console.log(result)
         res.status(200).json({ message: 'Category added successfully', success: true, data: result });
     } catch (error) {
         console.error('Error updating document:', error);
