@@ -76,7 +76,7 @@ app.use((req, res, next) => {
 
 // It's better to connect the db once here.
 mongoose
-  .connect(process.env.DB_URL_CONTAINER)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
   })
