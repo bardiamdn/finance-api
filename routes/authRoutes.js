@@ -66,6 +66,7 @@ router.post('/signup', async (req, res) => {
             //         createdAt: Date.now()
             //     }
             // ],
+            currency: "USD",
             createdAt: Date.now(),
         });
 

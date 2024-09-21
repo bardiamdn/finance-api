@@ -21,6 +21,8 @@ app.use(
   cors({
     origin: [
       "https://finance.madanilab.site",
+      "http://192.168.1.184:5173",
+      "http://192.168.1.164:5173",
       /^http:\/\/192\.168\.1\.\d{1,3}$/,
       "http://localhost:5173",
       "http://localhost:4173",
@@ -96,6 +98,6 @@ app.use("/api/balance", balanceRoutes);
 
 app.use("/api/home", homeRoute);
 
-const PORT = 3000;
+const PORT = 3005;
 app.listen(PORT);
 console.log(`app is running on http://localhost:${PORT}`);

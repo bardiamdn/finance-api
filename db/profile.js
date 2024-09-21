@@ -67,6 +67,9 @@ const profileSchema = new mongoose.Schema({
     lastSignin: {
         type: Date,
     },
+    currency: {
+        type: String
+    },
     totalBalance: {
         type: Number
     },

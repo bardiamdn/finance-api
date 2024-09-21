@@ -172,6 +172,25 @@ router.delete('/remove-category/:userId/:categoryId', async (req, res) => {
         }
 });
 
+router.put('/update-currency/:userId', async(req, res) => {
+    const userId = req.params.userId;
+    const updatedCurrency = req.body.updatedCurrency
+
+    try {
+        console.log(updatedCurrency)
+        const result = await Profile.findOneAndUpdate(
+            { userId: new ObjectId(userId) },
+            { $set: { currency : updatedCurrency
+            }},
+            { new: true }
+        )
+        res.status(200).json({ message: 'Currency updated successfully', success: true, data: result });
+    } catch(error) {
+        console.error('Error updating document:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+})
+
 
 // // update (add to) profile
 // router.put('/add-profile/:userId', async (req, res) => {
