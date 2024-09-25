@@ -21,11 +21,8 @@ app.use(
   cors({
     origin: [
       "https://finance.madanilab.site",
-      "http://192.168.1.184:5173",
-      "http://192.168.1.164:5173",
-      /^http:\/\/192\.168\.1\.\d{1,3}$/,
-      "http://localhost:5173",
-      "http://localhost:4173",
+      // "http://192.168.1.184:5173",
+      // "http://192.168.1.164:5173",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: [
@@ -41,22 +38,22 @@ app.use(
 
 app.use(express.json());
 
-app.options("*", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", [
-    "https://finance.madanilab.site",
-    /^http:\/\/192\.168\.1\.\d{1,3}$/,
-    "http://localhost:5173",
-  ]);
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, CF-Access-Client-Id, CF-Access-Client-Secret, x-user-timezone"
-  );
-  res.status(200).end();
-});
+// app.options("*", (req, res) => {
+//   res.setHeader("Access-Control-Allow-Origin", [
+//     "https://finance.madanilab.site",
+//     /^http:\/\/192\.168\.1\.\d{1,3}$/,
+//     "http://localhost:5173",
+//   ]);
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, OPTIONS"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, CF-Access-Client-Id, CF-Access-Client-Secret, x-user-timezone"
+//   );
+//   res.status(200).end();
+// });
 
 // const options = {
 //     key: fs.readFileSync('/path/to/private/key.pem'),
@@ -98,6 +95,6 @@ app.use("/api/balance", balanceRoutes);
 
 app.use("/api/home", homeRoute);
 
-const PORT = 3005;
+const PORT = 3000;
 app.listen(PORT);
 console.log(`app is running on http://localhost:${PORT}`);

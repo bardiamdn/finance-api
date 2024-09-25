@@ -160,7 +160,7 @@ router.get('/timeframe-account-balance/:userId', async (req,res) => {
         ]);
         if (accountsBalance.length > 0) {
             res.status(200).json({ sucess: true, accountsBalance: accountsBalance })
-        } else if (accountsBalance === 0) {
+        } else if (accountsBalance.length === 0) {
             res.status(204).json({ sucess: false, msg: "No account data to show" })
         }
     } catch (error) {

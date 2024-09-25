@@ -1,6 +1,6 @@
-# MadaniLab Finance API
+# Finance Dashboard API
 
-MadaniLab Finance API provides endpoints for managing financial transactions, user profiles, and spaces. It supports creating, retrieving, and updating financial data, user profiles, and spaces.
+Finance Dashboard API provides endpoints for managing financial transactions, user profiles, and spaces. It supports creating, retrieving, and updating financial data, user profiles, and spaces.
 
 ## Getting Started
 
