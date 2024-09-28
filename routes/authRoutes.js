@@ -11,10 +11,9 @@ router.get('/authenticated/:userId', utils.authMiddleware, async (req, res) => {
         const result = await User.findById({ _id: userId });
         if (result) {
             console.log(userId + " logged into app on: "+ new Date() )
-            res.status(200).json({ success: true, msg: "you are authorized" });
-        } else {
-            res.status(401).json({success: false, msg: "user not found"});
+            return res.status(200).json({ success: true, msg: "you are authorized" });
         }
+        res.status(401).json({success: false, msg: "user not found"});
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, msg: "an error occured in the server" });
@@ -66,7 +65,7 @@ router.post('/signup', async (req, res) => {
             //         createdAt: Date.now()
             //     }
             // ],
-            currency: "USD",
+            currency: { code: "USD", symbol: "$", name: "United States Dollar" },
             createdAt: Date.now(),
         });
 

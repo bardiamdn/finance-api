@@ -177,7 +177,6 @@ router.put('/update-currency/:userId', async(req, res) => {
     const updatedCurrency = req.body.updatedCurrency
 
     try {
-        console.log(updatedCurrency)
         const result = await Profile.findOneAndUpdate(
             { userId: new ObjectId(userId) },
             { $set: { currency : updatedCurrency

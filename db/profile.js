@@ -49,6 +49,21 @@ const categorySchema = new mongoose.Schema({
     },
 });
 
+const currencySchema = new mongoose.Schema({
+    code: {
+        type: String,
+        required: true,
+    },
+    symbol: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    }
+}, { _id: false });
+
 const profileSchema = new mongoose.Schema({
     userId : {
         type: ObjectId,
@@ -68,7 +83,9 @@ const profileSchema = new mongoose.Schema({
         type: Date,
     },
     currency: {
-        type: String
+        type: currencySchema,
+        default: { code: "USD", symbol: "$", name: "United States Dollar" },
+        required: true
     },
     totalBalance: {
         type: Number
