@@ -14,6 +14,14 @@ cd finance-api
 npm install
 ```
 
+Before running the server or containerizing it, ensure you have a running MongoDB server, and add its URL to your .env file as shown in the .env.example file.
+
+Then, generate a public and private key by running:
+
+```bash
+node keypairs/generateKeypair
+```
+
 ### Run the Server
 
 ```bash
