@@ -7,10 +7,10 @@ const { ObjectId } = require('mongoose').Types;
 it is done automatiically in the authRoutes*/
 
 // get profile
-router.get('/read-profile/:userId', async (req, res) => {
-    const userId = req.params.userId;
+router.get('/read-profile/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
     try {
-        const result = await Profile.findOne({ userId: userId }).exec();
+        const result = await Profile.findOne({ _id: profileId }).exec();
         res.status(200).json({ success: true, data: result });
     } catch (error) {
         console.error('Error reading documents:', error);
@@ -19,13 +19,13 @@ router.get('/read-profile/:userId', async (req, res) => {
 });
 
 // add account
-router.put('/add-account/:userId', async (req, res) => {
-    const userId = req.params.userId;
+router.put('/add-account/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
     const accountData = req.body;
     
     try {
         const result = await Profile.findOneAndUpdate(
-            { userId: new ObjectId(userId) },
+            { _id: profileId },
             { $push: { accounts: accountData } },
             { new: true }
         );
@@ -48,13 +48,13 @@ router.put('/add-account/:userId', async (req, res) => {
         accountId:
     }
 ]*/
-router.put('/update-account/:userId', async (req, res) => {
-    const userId = req.params.userId;
+router.put('/update-account/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
     const updatedProfile = req.body;
     
     try {
         const profile = await Profile.findOneAndUpdate( 
-            { userId: new ObjectId(userId) },
+            { _id: profileId },
             { $set: updatedProfile }, // New data to set
             { new: true }
         );
@@ -67,17 +67,17 @@ router.put('/update-account/:userId', async (req, res) => {
 });
 
 // remove account
-router.delete('/remove-account/:userId', async (req, res) => {
-    const userId = req.params.userId;
+router.delete('/remove-account/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
     const accountId = req.query.accountId;
     
     try {
         const result = await Profile.findOneAndUpdate(
-            { userId: new ObjectId(userId) },
+            { _id: profileId },
             { $pull: { accounts: { _id: new ObjectId(accountId) } } },
             { new: true }
         );
-        const transactionResult = await Transaction.deleteMany({ userId: new ObjectId(userId), accountId: accountId });
+        const transactionResult = await Transaction.deleteMany({ _id: profileId, accountId: accountId });
         if (!result) {
             return res.status(404).json({ message: `Account with ID ${accountId} not found` });
         }
@@ -91,13 +91,13 @@ router.delete('/remove-account/:userId', async (req, res) => {
 });
 
 // add category
-router.put('/add-category/:userId', async (req,res) => {
-    const userId = req.params.userId;
+router.put('/add-category/:profileId', async (req,res) => {
+    const profileId = req.params.profileId;
     categoryData = req.body;
 
     try {
         const result = await Profile.findOneAndUpdate(
-            { userId : new ObjectId(userId) },
+            { _id: profileId },
             { $push: { categories: categoryData } },
             { new: true }
         );
@@ -124,8 +124,8 @@ router.put('/add-category/:userId', async (req,res) => {
         data: {data to be updated}
     }
 ]*/
-router.put('/update-category/:userId', async (req, res) => {
-    const userId = req.params.userId;
+router.put('/update-category/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
     const categoryId = req.body._id;
     const categoryTitle = req.body.categoryTitle;
     const categoryColor = req.body.categoryColor;
@@ -133,7 +133,7 @@ router.put('/update-category/:userId', async (req, res) => {
     
     try {
             const result = await Profile.findOneAndUpdate(
-                { userId: new ObjectId(userId), 'categories._id': categoryId },
+                { _id: profileId, 'categories._id': categoryId },
                 { $set: { 
                     "categories.$.categoryTitle": categoryTitle,
                     "categories.$.categoryColor": categoryColor,
@@ -149,17 +149,17 @@ router.put('/update-category/:userId', async (req, res) => {
 });
 
 // remove category
-router.delete('/remove-category/:userId/:categoryId', async (req, res) => {
-    const userId = req.params.userId;
+router.delete('/remove-category/:profileId/:categoryId', async (req, res) => {
+    const profileId = req.params.profileId;
     const categoryId = req.params.categoryId;
     
     try {
         const result = await Profile.findOneAndUpdate(
-            { userId: new ObjectId(userId) },
+            { _id: profileId },
             { $pull: { categories: { _id: new ObjectId(categoryId) } } },
             { new: true }
         );
-        const transactionResult = await Transaction.deleteMany({ userId: new ObjectId(userId), categoryId: categoryId });
+        const transactionResult = await Transaction.deleteMany({ _id: profileId, categoryId: categoryId });
         if (!result) {
             return res.status(404).json({ message: `Category with ID ${categoryId} not found` });
         }
@@ -172,13 +172,13 @@ router.delete('/remove-category/:userId/:categoryId', async (req, res) => {
         }
 });
 
-router.put('/update-currency/:userId', async(req, res) => {
-    const userId = req.params.userId;
+router.put('/update-currency/:profileId', async(req, res) => {
+    const profileId = req.params.profileId;
     const updatedCurrency = req.body.updatedCurrency
 
     try {
         const result = await Profile.findOneAndUpdate(
-            { userId: new ObjectId(userId) },
+            { _id: profileId },
             { $set: { currency : updatedCurrency
             }},
             { new: true }
@@ -189,25 +189,6 @@ router.put('/update-currency/:userId', async(req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 })
-
-
-// // update (add to) profile
-// router.put('/add-profile/:userId', async (req, res) => {
-//     const userId = req.params.userId;
-//     const data = req.body;
-    
-//     try {
-//         const result = await Profile.findOneAndUpdate(
-//             { userId: new ObjectId(userId) },
-//             { $set: data },
-//             { new: true }
-//         ); 
-//         res.status(200).json({ message: 'Document added successfully', success: true, data: result });
-//         } catch (error) {
-//             console.error('Error updating document:', error);
-//             res.status(500).json({ message: 'Internal Server Error' });
-//         }
-// });
 
 
 module.exports = router;

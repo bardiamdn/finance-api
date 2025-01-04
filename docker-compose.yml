@@ -5,12 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: finance-api-img:1.1
-    container_name: finance-madanilab-api
+    image: crunchcat-api-img:1.2
+    container_name: crunchcat-api
     ports:
       - "3000:3000"
     environment:
-      - DB_URL_CONTAINER=mongodb://localhost:27017/finance
+      - DB_URL_CONTAINER=mongodb://localhost:27017/crunchcat
       # - NODE_ENV=development
       # volumes:
       # - .:/usr/src/app  

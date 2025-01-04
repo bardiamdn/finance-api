@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Transaction = require("../db/transaction");
-const Profile = require("../db/profile");
 const { ObjectId } = require("mongodb");
 
 router.post("/create", async (req, res) => {

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema.Types;
 
 const accountSchema = new mongoose.Schema({
     dateUpdated: {
@@ -7,7 +6,6 @@ const accountSchema = new mongoose.Schema({
     },
     accountTitle: {
         type: String,
-        index: true
     },
     accountColor: {
         type: String,
@@ -65,8 +63,8 @@ const currencySchema = new mongoose.Schema({
 }, { _id: false });
 
 const profileSchema = new mongoose.Schema({
-    userId : {
-        type: ObjectId,
+    userEmail : {
+        type: String,
         required: true,
         index: true
     },
@@ -93,6 +91,41 @@ const profileSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
     },
+});
+
+const defaultAccounts = [
+    { accountTitle: "💵 Cash", accountColor: "#FFD700", accountBalance: 0 }, 
+    { accountTitle: "🏦 Bank Account", accountColor: "#3E8E41", accountBalance: 0 }, 
+    { accountTitle: "💳 Credit Card", accountColor: "#FF4500", accountBalance: 0 }, 
+    { accountTitle: "💰 Savings", accountColor: "#2E86C1", accountBalance: 0 }, 
+    { accountTitle: "📈 Investment", accountColor: "#6A1B9A", accountBalance: 0 }, 
+];
+
+const defaultCategories = [
+    { categoryTitle: "💼 Salary", categoryType: "Income", categoryColor: "#4CAF50" }, // Green for wealth
+    { categoryTitle: "🏢 Business", categoryType: "Income", categoryColor: "#81C784" }, // Light green for commerce
+    { categoryTitle: "📊 Investments", categoryType: "Income", categoryColor: "#FFD54F" }, // Yellow for returns
+    { categoryTitle: "🎁 Other Income", categoryType: "Income", categoryColor: "#FFEE58" },
+    { categoryTitle: "🍔 Food", categoryType: "Expense", categoryColor: "#FF7043" }, // Orange-red for meals
+    { categoryTitle: "🏠 Rent", categoryType: "Expense", categoryColor: "#BDBDBD" }, // Gray for housing
+    { categoryTitle: "🚗 Transportation", categoryType: "Expense", categoryColor: "#546E7A" }, // Blue-gray for vehicles
+    { categoryTitle: "💡 Utilities", categoryType: "Expense", categoryColor: "#8D6E63" }, // Brown for resources
+    { categoryTitle: "🎮 Entertainment", categoryType: "Expense", categoryColor: "#03A9F4" }, // Bright blue for fun
+    { categoryTitle: "❤️ Healthcare", categoryType: "Expense", categoryColor: "#E91E63" }, // Red for health
+    { categoryTitle: "🛡️ Insurance", categoryType: "Expense", categoryColor: "#00796B" }, // Teal for security
+    { categoryTitle: "🎓 Education", categoryType: "Expense", categoryColor: "#3F51B5" }, // Indigo for learning
+    { categoryTitle: "📦 Other Expenses", categoryType: "Expense", categoryColor: "#FF9800" }, // Bright orange for miscellaneous
+
+];
+
+profileSchema.pre("save", function (next) {
+    if (!this.accounts || this.accounts.length === 0) {
+        this.accounts = defaultAccounts;
+    }
+    if (!this.categories || this.categories.length === 0) {
+        this.categories = defaultCategories;
+    }
+    next();
 });
 
 

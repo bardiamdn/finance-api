@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const transactionSchema = new mongoose.Schema({
+    // same as _id profile
     userId: {
         type: ObjectId,
         required: true,

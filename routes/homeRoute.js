@@ -1,8 +1,6 @@
 const router = require('express').Router();
 
-const Transaction = require('../db/transaction');
 const Profile = require('../db/profile');
-const Space = require('../db/space');
 
 // Get all data in one route with userId
 router.get('/:userId', async (req, res) => {
