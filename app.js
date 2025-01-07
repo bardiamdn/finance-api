@@ -53,7 +53,7 @@ function hourDayToSec(input) {
 app.get('/', async (req, res) => {
   const userEmail = req.headers['cf-access-authenticated-user-email'];
   if (userEmail) {
-      console.log(`User Email: ${userEmail}`);
+      console.log(`${userEmail} logged in on ${new Date()}`);
       let profile = await Profile.findOne({ userEmail: userEmail }).exec();
 
       if (!profile) {
